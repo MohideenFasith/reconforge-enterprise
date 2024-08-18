@@ -1,0 +1,57 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+from itertools import combinations
+
+from ..models import StatementEntryRecord, TransactionRecord
+
+
+@dataclass(frozen=True, slots=True)
+class ManyToOneCandidate:
+    transaction_ids: tuple[str, ...]
+    statement_entry_id: str
+    total: Decimal
+    difference: Decimal
+    score: float
+
+
+def find_many_to_one_matches(
+    transactions: list[TransactionRecord],
+    statement: StatementEntryRecord,
+    *,
+    tolerance: Decimal = Decimal("0.00"),
+    max_group_size: int = 4,
+    date_window_days: int = 7,
+) -> list[ManyToOneCandidate]:
+    eligible = [
+        transaction
+        for transaction in transactions
+        if transaction.account_id == statement.account_id
+        and transaction.currency == statement.currency
+        and abs((transaction.occurred_on - statement.occurred_on).days) <= date_window_days
+    ]
+    candidates: list[ManyToOneCandidate] = []
+    upper = min(max_group_size, len(eligible))
+    for size in range(2, upper + 1):
+        for group in combinations(eligible, size):
+            total = sum((item.amount for item in group), start=Decimal("0.00"))
+            difference = abs(statement.amount - total)
+            if difference > tolerance:
+                continue
+            date_spread = max(item.occurred_on for item in group) - min(
+                item.occurred_on for item in group
+            )
+            score = 0.95 - min(0.2, (size - 2) * 0.05) - min(0.15, date_spread.days * 0.01)
+            if tolerance:
+                score -= min(0.2, float(difference / max(tolerance, Decimal("0.01"))) * 0.2)
+            candidates.append(
+                ManyToOneCandidate(
+                    transaction_ids=tuple(sorted(item.id for item in group)),
+                    statement_entry_id=statement.id,
+                    total=total,
+                    difference=difference,
+                    score=round(max(0.0, score), 6),
+                )
+            )
+    return sorted(candidates, key=lambda item: (-item.score, item.difference, len(item.transaction_ids)))

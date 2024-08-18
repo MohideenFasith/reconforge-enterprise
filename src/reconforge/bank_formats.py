@@ -1,0 +1,61 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import date
+from decimal import Decimal
+
+from .errors import InvalidImport
+from .normalization import parse_amount
+
+
+@dataclass(frozen=True, slots=True)
+class BankLine:
+    booking_date: date
+    amount: Decimal
+    currency: str
+    reference: str
+    counterparty: str
+    description: str
+
+
+def parse_pipe_statement(content: str) -> list[BankLine]:
+    """Parse a deterministic pipe-delimited bank export used by offline tests."""
+    lines: list[BankLine] = []
+    for number, raw in enumerate(content.splitlines(), start=1):
+        raw = raw.strip()
+        if not raw or raw.startswith("#"):
+            continue
+        parts = [part.strip() for part in raw.split("|")]
+        if len(parts) != 6:
+            raise InvalidImport(f"line {number}: expected 6 fields")
+        raw_date, raw_amount, currency, reference, counterparty, description = parts
+        try:
+            booking_date = date.fromisoformat(raw_date)
+            amount = parse_amount(raw_amount)
+        except ValueError as exc:
+            raise InvalidImport(f"line {number}: {exc}") from exc
+        currency = currency.upper()
+        if len(currency) != 3:
+            raise InvalidImport(f"line {number}: invalid currency")
+        lines.append(BankLine(booking_date, amount, currency, reference, counterparty, description))
+    return lines
+
+
+def to_csv_rows(lines: list[BankLine], *, statement_id: str, account_id: str) -> str:
+    header = "statement_id,line_number,account_id,occurred_on,amount,currency,reference,counterparty,description"
+    rows = [header]
+    for index, line in enumerate(lines, start=1):
+        values = [
+            statement_id,
+            str(index),
+            account_id,
+            line.booking_date.isoformat(),
+            str(line.amount),
+            line.currency,
+            line.reference,
+            line.counterparty,
+            line.description,
+        ]
+        escaped = [f'"{value.replace(chr(34), chr(34) * 2)}"' if "," in value else value for value in values]
+        rows.append(",".join(escaped))
+    return "\n".join(rows)

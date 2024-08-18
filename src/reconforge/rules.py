@@ -1,0 +1,39 @@
+from __future__ import annotations
+
+from .models import MatchRuleIn, MatchRuleRecord, RuleKind, new_id
+from .storage import InMemoryStore
+
+
+class RuleService:
+    def __init__(self, store: InMemoryStore) -> None:
+        self.store = store
+
+    def create(self, tenant_id: str, payload: MatchRuleIn) -> MatchRuleRecord:
+        record = MatchRuleRecord(id=new_id("rule"), tenant_id=tenant_id, **payload.model_dump())
+        return self.store.create("rules", record)
+
+    def list(self, tenant_id: str) -> list[MatchRuleRecord]:
+        return sorted(self.store.list("rules", tenant_id), key=lambda rule: (rule.priority, rule.name))
+
+    def seed_defaults(self, tenant_id: str) -> list[MatchRuleRecord]:
+        if self.list(tenant_id):
+            return self.list(tenant_id)
+        defaults = [
+            MatchRuleIn(name="Exact reference and amount", kind=RuleKind.EXACT_REFERENCE, priority=10),
+            MatchRuleIn(
+                name="Two-day amount tolerance",
+                kind=RuleKind.AMOUNT_TOLERANCE,
+                priority=20,
+                amount_tolerance="0.50",
+                date_window_days=2,
+            ),
+            MatchRuleIn(
+                name="Counterparty fallback",
+                kind=RuleKind.COUNTERPARTY,
+                priority=30,
+                amount_tolerance="2.00",
+                date_window_days=5,
+                require_counterparty=True,
+            ),
+        ]
+        return [self.create(tenant_id, item) for item in defaults]

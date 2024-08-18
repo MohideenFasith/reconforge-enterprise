@@ -1,0 +1,8 @@
+# Development lock. Runtime dependencies are imported from requirements.lock.
+-r requirements.lock
+coverage==7.13.4
+mypy==2.3.0
+pip-audit==2.10.1
+pytest==9.0.2
+pytest-cov==7.0.0
+ruff==0.16.2

@@ -1,0 +1,56 @@
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import date, timedelta
+
+
+@dataclass(slots=True)
+class BusinessCalendar:
+    """Weekend/holiday aware date arithmetic used for reconciliation windows."""
+
+    holidays: set[date] = field(default_factory=set)
+    weekend_days: frozenset[int] = frozenset({5, 6})
+
+    def is_business_day(self, value: date) -> bool:
+        return value.weekday() not in self.weekend_days and value not in self.holidays
+
+    def next_business_day(self, value: date, *, include_current: bool = False) -> date:
+        current = value if include_current else value + timedelta(days=1)
+        while not self.is_business_day(current):
+            current += timedelta(days=1)
+        return current
+
+    def previous_business_day(self, value: date, *, include_current: bool = False) -> date:
+        current = value if include_current else value - timedelta(days=1)
+        while not self.is_business_day(current):
+            current -= timedelta(days=1)
+        return current
+
+    def add_business_days(self, value: date, days: int) -> date:
+        if days == 0:
+            return value
+        direction = 1 if days > 0 else -1
+        remaining = abs(days)
+        current = value
+        while remaining:
+            current += timedelta(days=direction)
+            if self.is_business_day(current):
+                remaining -= 1
+        return current
+
+    def business_days_between(self, start: date, end: date) -> int:
+        if start == end:
+            return 0
+        direction = 1 if end > start else -1
+        current = start
+        count = 0
+        while current != end:
+            current += timedelta(days=direction)
+            if self.is_business_day(current):
+                count += direction
+        return count
+
+    def window(self, center: date, days: int) -> tuple[date, date]:
+        if days < 0:
+            raise ValueError("days must be non-negative")
+        return self.add_business_days(center, -days), self.add_business_days(center, days)

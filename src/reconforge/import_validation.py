@@ -1,0 +1,66 @@
+from __future__ import annotations
+
+from collections import Counter
+from dataclasses import dataclass
+from decimal import Decimal
+from typing import Iterable
+
+from .models import StatementEntryIn, TransactionIn
+
+
+@dataclass(frozen=True, slots=True)
+class ValidationIssue:
+    row: int
+    field: str
+    code: str
+    message: str
+
+
+@dataclass(frozen=True, slots=True)
+class ImportQuality:
+    rows: int
+    issues: tuple[ValidationIssue, ...]
+
+    @property
+    def valid(self) -> bool:
+        return not self.issues
+
+
+def validate_transactions(items: Iterable[TransactionIn]) -> ImportQuality:
+    rows = list(items)
+    issues: list[ValidationIssue] = []
+    external_ids = Counter(item.external_id for item in rows)
+    for index, item in enumerate(rows, start=1):
+        if external_ids[item.external_id] > 1:
+            issues.append(
+                ValidationIssue(index, "external_id", "duplicate", "external_id appears more than once")
+            )
+        if not item.reference and not item.counterparty:
+            issues.append(
+                ValidationIssue(index, "reference", "weak_identity", "reference and counterparty are both empty")
+            )
+        if abs(item.amount) >= Decimal("10000000"):
+            issues.append(
+                ValidationIssue(index, "amount", "extreme_value", "amount exceeds review threshold")
+            )
+    return ImportQuality(len(rows), tuple(issues))
+
+
+def validate_statements(items: Iterable[StatementEntryIn]) -> ImportQuality:
+    rows = list(items)
+    issues: list[ValidationIssue] = []
+    line_keys = Counter((item.statement_id, item.line_number) for item in rows)
+    for index, item in enumerate(rows, start=1):
+        if line_keys[(item.statement_id, item.line_number)] > 1:
+            issues.append(
+                ValidationIssue(index, "line_number", "duplicate", "statement line appears more than once")
+            )
+        if not item.description and not item.reference:
+            issues.append(
+                ValidationIssue(index, "description", "sparse", "statement line has no description or reference")
+            )
+    return ImportQuality(len(rows), tuple(issues))
+
+
+def issue_summary(quality: ImportQuality) -> dict[str, int]:
+    return dict(sorted(Counter(issue.code for issue in quality.issues).items()))

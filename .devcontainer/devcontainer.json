@@ -1,0 +1,6 @@
+{
+  "name": "ReconForge Enterprise",
+  "build": {"dockerfile": "../Dockerfile", "context": ".."},
+  "remoteUser": "reconforge",
+  "forwardPorts": [8000]
+}

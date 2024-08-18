@@ -1,0 +1,64 @@
+from __future__ import annotations
+
+from fastapi import APIRouter, Depends, Response, status
+
+from ..api_dependencies import principal, require_role, service_from_request
+from ..models import WebhookIn
+from ..security import Principal
+from ..service import ReconForgeService
+
+router = APIRouter(tags=["admin"])
+
+
+@router.get("/reports/summary")
+def summary(
+    user: Principal = Depends(principal),
+    service: ReconForgeService = Depends(service_from_request),
+):
+    return service.report_summary(user.tenant_id)
+
+
+@router.get("/reports/account-exposure")
+def exposure(
+    user: Principal = Depends(principal),
+    service: ReconForgeService = Depends(service_from_request),
+):
+    return service.account_exposure(user.tenant_id)
+
+
+@router.get("/audit")
+def audit(
+    resource_id: str | None = None,
+    user: Principal = Depends(principal),
+    service: ReconForgeService = Depends(service_from_request),
+):
+    return service.audit_events(user.tenant_id, resource_id=resource_id)
+
+
+@router.get("/export")
+def export(
+    user: Principal = Depends(require_role("admin")),
+    service: ReconForgeService = Depends(service_from_request),
+) -> Response:
+    return Response(
+        service.export(user.tenant_id),
+        media_type="application/json",
+        headers={"Content-Disposition": 'attachment; filename="reconforge-export.json"'},
+    )
+
+
+@router.post("/webhooks", status_code=status.HTTP_201_CREATED)
+def create_webhook(
+    payload: WebhookIn,
+    user: Principal = Depends(require_role("admin")),
+    service: ReconForgeService = Depends(service_from_request),
+):
+    return service.create_webhook(user.tenant_id, payload)
+
+
+@router.get("/webhooks")
+def list_webhooks(
+    user: Principal = Depends(require_role("admin")),
+    service: ReconForgeService = Depends(service_from_request),
+):
+    return service.webhooks.list(user.tenant_id)

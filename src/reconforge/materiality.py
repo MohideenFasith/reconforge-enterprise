@@ -1,0 +1,27 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+
+
+@dataclass(frozen=True, slots=True)
+class MaterialityPolicy:
+    absolute_floor: Decimal = Decimal("10.00")
+    account_percent: Decimal = Decimal("0.001")
+    high_risk_multiplier: Decimal = Decimal("0.5")
+
+    def threshold(self, account_balance: Decimal, *, high_risk: bool = False) -> Decimal:
+        percentage = abs(account_balance) * self.account_percent
+        threshold = max(self.absolute_floor, percentage)
+        if high_risk:
+            threshold *= self.high_risk_multiplier
+        return threshold.quantize(Decimal("0.01"))
+
+    def is_material(
+        self,
+        variance: Decimal,
+        account_balance: Decimal,
+        *,
+        high_risk: bool = False,
+    ) -> bool:
+        return abs(variance) >= self.threshold(account_balance, high_risk=high_risk)

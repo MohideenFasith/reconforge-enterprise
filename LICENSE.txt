@@ -1,0 +1,5 @@
+Copyright (c) 2026. All rights reserved.
+
+This repository is provided for evaluation and development. No patent, trademark,
+redistribution, sublicensing, or commercial training-data rights are granted by this
+placeholder notice. Replace this file with the licensing terms you intend to use.

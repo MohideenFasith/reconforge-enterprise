@@ -1,0 +1,17 @@
+from __future__ import annotations
+
+import logging
+
+from pythonjsonlogger.json import JsonFormatter
+
+
+def configure_logging(level: str = "INFO") -> None:
+    root = logging.getLogger()
+    root.setLevel(level)
+    if root.handlers:
+        for handler in root.handlers:
+            handler.setFormatter(JsonFormatter("%(asctime)s %(levelname)s %(name)s %(message)s"))
+        return
+    handler = logging.StreamHandler()
+    handler.setFormatter(JsonFormatter("%(asctime)s %(levelname)s %(name)s %(message)s"))
+    root.addHandler(handler)

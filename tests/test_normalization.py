@@ -1,0 +1,24 @@
+from decimal import Decimal
+
+import pytest
+
+from reconforge.normalization import compare_text, normalize_counterparty, normalize_reference, normalize_text, parse_amount
+
+
+def test_text_normalization_and_counterparty_suffixes() -> None:
+    assert normalize_text("  Café   ACME  ") == "cafe acme"
+    assert normalize_reference("INV-10 / A") == "inv10a"
+    assert normalize_counterparty("Acme Corporation") == "acme"
+
+
+def test_parse_amount_formats() -> None:
+    assert parse_amount("$1,234.50") == Decimal("1234.50")
+    assert parse_amount("(22.10)") == Decimal("-22.10")
+    with pytest.raises(ValueError):
+        parse_amount("not-money")
+
+
+def test_compare_text_overlap() -> None:
+    similarity = compare_text("Acme Global Holdings", "Acme Global")
+    assert similarity.prefix is True
+    assert similarity.token_overlap > 0.6

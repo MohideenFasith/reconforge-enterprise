@@ -1,0 +1,41 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Any
+
+from .models import new_id, utcnow
+from .storage import InMemoryStore
+
+
+@dataclass(slots=True)
+class OutboxMessage:
+    id: str
+    tenant_id: str
+    topic: str
+    payload: dict[str, Any]
+    created_at: datetime
+    delivered_at: datetime | None = None
+    attempts: int = 0
+
+
+class Outbox:
+    def __init__(self, store: InMemoryStore) -> None:
+        self.store = store
+
+    def publish(self, tenant_id: str, topic: str, payload: dict[str, Any]) -> OutboxMessage:
+        record = OutboxMessage(new_id("msg"), tenant_id, topic, payload, utcnow())
+        return self.store.create("outbox", record)
+
+    def pending(self, tenant_id: str, *, limit: int = 100) -> list[OutboxMessage]:
+        messages: list[OutboxMessage] = self.store.list("outbox", tenant_id)
+        pending = [message for message in messages if message.delivered_at is None]
+        pending.sort(key=lambda message: message.created_at)
+        return pending[:limit]
+
+    def mark_attempt(self, tenant_id: str, message_id: str, *, delivered: bool) -> OutboxMessage:
+        message: OutboxMessage = self.store.get("outbox", tenant_id, message_id)
+        message.attempts += 1
+        if delivered:
+            message.delivered_at = utcnow()
+        return self.store.put("outbox", message)

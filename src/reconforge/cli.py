@@ -1,0 +1,29 @@
+from __future__ import annotations
+
+import argparse
+import json
+
+import uvicorn
+
+from .main import create_app
+from .settings import get_settings
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(prog="reconforge")
+    sub = parser.add_subparsers(dest="command", required=True)
+    serve = sub.add_parser("serve", help="run the API server")
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", default=8000, type=int)
+    sub.add_parser("config", help="print safe effective configuration")
+    args = parser.parse_args()
+    settings = get_settings()
+    if args.command == "config":
+        safe = settings.model_dump(exclude={"api_keys"})
+        print(json.dumps(safe, indent=2, sort_keys=True))
+        return
+    uvicorn.run(create_app(settings), host=args.host, port=args.port)
+
+
+if __name__ == "__main__":
+    main()

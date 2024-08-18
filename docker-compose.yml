@@ -1,0 +1,15 @@
+services:
+  reconforge:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      RECONFORGE_APP_ENV: docker
+      RECONFORGE_API_KEYS: local-dev-key:developer:default:admin+analyst
+      RECONFORGE_RATE_LIMIT_REQUESTS: "120"
+      RECONFORGE_RATE_LIMIT_WINDOW_SECONDS: "60"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true

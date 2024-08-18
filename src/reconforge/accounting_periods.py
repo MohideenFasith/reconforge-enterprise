@@ -1,0 +1,45 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import date, timedelta
+
+
+@dataclass(frozen=True, slots=True)
+class AccountingPeriod:
+    year: int
+    month: int
+    start: date
+    end: date
+
+    @property
+    def label(self) -> str:
+        return f"{self.year:04d}-{self.month:02d}"
+
+    def contains(self, value: date) -> bool:
+        return self.start <= value <= self.end
+
+
+def calendar_month(year: int, month: int) -> AccountingPeriod:
+    if not 1 <= month <= 12:
+        raise ValueError("month must be between 1 and 12")
+    start = date(year, month, 1)
+    if month == 12:
+        next_month = date(year + 1, 1, 1)
+    else:
+        next_month = date(year, month + 1, 1)
+    return AccountingPeriod(year, month, start, next_month - timedelta(days=1))
+
+
+def periods_between(start: date, end: date) -> list[AccountingPeriod]:
+    if end < start:
+        raise ValueError("end cannot be before start")
+    periods: list[AccountingPeriod] = []
+    year, month = start.year, start.month
+    while (year, month) <= (end.year, end.month):
+        periods.append(calendar_month(year, month))
+        if month == 12:
+            year += 1
+            month = 1
+        else:
+            month += 1
+    return periods

@@ -1,0 +1,53 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+from enum import StrEnum
+
+from .models import ExceptionCaseRecord, ExceptionKind, MatchRecord
+
+
+class PolicyAction(StrEnum):
+    ALLOW = "allow"
+    REVIEW = "review"
+    BLOCK = "block"
+
+
+@dataclass(frozen=True, slots=True)
+class PolicyDecision:
+    action: PolicyAction
+    reasons: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class ReconciliationPolicy:
+    minimum_match_score: float = 0.75
+    maximum_auto_match_amount_delta: Decimal = Decimal("1.00")
+    maximum_auto_match_date_delta_days: int = 5
+    block_exception_severity: int = 5
+    review_exception_severity: int = 3
+
+    def evaluate_match(self, match: MatchRecord) -> PolicyDecision:
+        reasons: list[str] = []
+        if match.score < self.minimum_match_score:
+            reasons.append("match score below policy threshold")
+        if abs(match.amount_delta) > self.maximum_auto_match_amount_delta:
+            reasons.append("amount delta exceeds auto-match threshold")
+        if match.date_delta_days > self.maximum_auto_match_date_delta_days:
+            reasons.append("date delta exceeds auto-match threshold")
+        if reasons:
+            return PolicyDecision(PolicyAction.REVIEW, tuple(reasons))
+        return PolicyDecision(PolicyAction.ALLOW, ("within auto-match policy",))
+
+    def evaluate_case(self, case: ExceptionCaseRecord) -> PolicyDecision:
+        reasons: list[str] = []
+        if case.severity >= self.block_exception_severity:
+            reasons.append("severity requires blocking review")
+            return PolicyDecision(PolicyAction.BLOCK, tuple(reasons))
+        if case.severity >= self.review_exception_severity:
+            reasons.append("severity requires analyst review")
+        if case.kind in {ExceptionKind.DUPLICATE, ExceptionKind.SUSPICIOUS_REVERSAL}:
+            reasons.append("exception kind requires analyst review")
+        if reasons:
+            return PolicyDecision(PolicyAction.REVIEW, tuple(dict.fromkeys(reasons)))
+        return PolicyDecision(PolicyAction.ALLOW, ("low-risk exception",))

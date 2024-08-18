@@ -1,0 +1,27 @@
+from __future__ import annotations
+
+from fastapi import APIRouter, Depends, status
+
+from ..api_dependencies import principal, service_from_request
+from ..models import MatchRuleIn
+from ..security import Principal
+from ..service import ReconForgeService
+
+router = APIRouter(prefix="/rules", tags=["rules"])
+
+
+@router.post("", status_code=status.HTTP_201_CREATED)
+def create_rule(
+    payload: MatchRuleIn,
+    user: Principal = Depends(principal),
+    service: ReconForgeService = Depends(service_from_request),
+):
+    return service.create_rule(user.tenant_id, payload, actor=user.name)
+
+
+@router.get("")
+def list_rules(
+    user: Principal = Depends(principal),
+    service: ReconForgeService = Depends(service_from_request),
+):
+    return service.rules.list(user.tenant_id)

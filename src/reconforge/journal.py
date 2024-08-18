@@ -1,0 +1,116 @@
+from __future__ import annotations
+
+from collections import defaultdict
+from dataclasses import dataclass
+from datetime import date
+from decimal import Decimal
+from enum import StrEnum
+
+from .errors import InvalidOperation
+from .models import new_id, utcnow
+
+
+class EntrySide(StrEnum):
+    DEBIT = "debit"
+    CREDIT = "credit"
+
+
+@dataclass(frozen=True, slots=True)
+class JournalLine:
+    account_code: str
+    side: EntrySide
+    amount: Decimal
+    currency: str
+    memo: str = ""
+
+    def __post_init__(self) -> None:
+        if not self.account_code.strip():
+            raise ValueError("account_code is required")
+        if self.amount <= 0:
+            raise ValueError("journal line amount must be positive")
+        if len(self.currency) != 3:
+            raise ValueError("currency must be a three-letter code")
+
+
+@dataclass(slots=True)
+class JournalEntry:
+    id: str
+    tenant_id: str
+    posting_date: date
+    reference: str
+    lines: list[JournalLine]
+    created_by: str
+    created_at: object
+    posted: bool = False
+
+
+class JournalService:
+    def __init__(self) -> None:
+        self._entries: dict[tuple[str, str], JournalEntry] = {}
+
+    @staticmethod
+    def validate(lines: list[JournalLine]) -> None:
+        if len(lines) < 2:
+            raise InvalidOperation("journal entry requires at least two lines")
+        totals: dict[str, dict[EntrySide, Decimal]] = defaultdict(
+            lambda: {EntrySide.DEBIT: Decimal("0"), EntrySide.CREDIT: Decimal("0")}
+        )
+        for line in lines:
+            totals[line.currency.upper()][line.side] += line.amount
+        unbalanced = {
+            currency: values
+            for currency, values in totals.items()
+            if values[EntrySide.DEBIT] != values[EntrySide.CREDIT]
+        }
+        if unbalanced:
+            detail = ", ".join(
+                f"{currency} debit={values[EntrySide.DEBIT]} credit={values[EntrySide.CREDIT]}"
+                for currency, values in sorted(unbalanced.items())
+            )
+            raise InvalidOperation(f"unbalanced journal entry: {detail}")
+
+    def create(
+        self,
+        tenant_id: str,
+        *,
+        posting_date: date,
+        reference: str,
+        lines: list[JournalLine],
+        actor: str,
+    ) -> JournalEntry:
+        self.validate(lines)
+        entry = JournalEntry(
+            id=new_id("journal"),
+            tenant_id=tenant_id,
+            posting_date=posting_date,
+            reference=reference,
+            lines=list(lines),
+            created_by=actor,
+            created_at=utcnow(),
+        )
+        self._entries[(tenant_id, entry.id)] = entry
+        return entry
+
+    def get(self, tenant_id: str, entry_id: str) -> JournalEntry:
+        try:
+            return self._entries[(tenant_id, entry_id)]
+        except KeyError as exc:
+            raise InvalidOperation("journal entry not found") from exc
+
+    def post(self, tenant_id: str, entry_id: str) -> JournalEntry:
+        entry = self.get(tenant_id, entry_id)
+        if entry.posted:
+            raise InvalidOperation("journal entry already posted")
+        self.validate(entry.lines)
+        entry.posted = True
+        return entry
+
+    def trial_balance(self, tenant_id: str) -> dict[str, Decimal]:
+        balances: dict[str, Decimal] = defaultdict(lambda: Decimal("0"))
+        for (candidate_tenant, _), entry in self._entries.items():
+            if candidate_tenant != tenant_id or not entry.posted:
+                continue
+            for line in entry.lines:
+                sign = Decimal("1") if line.side == EntrySide.DEBIT else Decimal("-1")
+                balances[f"{line.currency}:{line.account_code}"] += sign * line.amount
+        return dict(sorted(balances.items()))

@@ -1,0 +1,36 @@
+from datetime import date
+from decimal import Decimal
+
+import pytest
+
+from reconforge.business_calendar import BusinessCalendar
+from reconforge.currency import CurrencyRegistry, FxTable
+from reconforge.materiality import MaterialityPolicy
+from reconforge.variance import calculate_variance, explain_variance
+
+
+def test_business_calendar_arithmetic() -> None:
+    cal = BusinessCalendar(holidays={date(2026, 8, 17)})
+    assert cal.next_business_day(date(2026, 8, 14)) == date(2026, 8, 18)
+    assert cal.previous_business_day(date(2026, 8, 18)) == date(2026, 8, 14)
+    assert cal.add_business_days(date(2026, 8, 14), 1) == date(2026, 8, 18)
+    assert cal.business_days_between(date(2026, 8, 14), date(2026, 8, 18)) == 1
+
+
+def test_currency_registry_and_fx() -> None:
+    registry = CurrencyRegistry()
+    assert registry.quantize(Decimal("1.225"), "USD") == Decimal("1.22")
+    fx = FxTable(registry)
+    fx.set("USD", "INR", Decimal("83.5"))
+    assert fx.convert(Decimal("2"), "USD", "INR") == Decimal("167.00")
+    with pytest.raises(Exception):
+        fx.convert(Decimal("1"), "USD", "EUR")
+
+
+def test_variance_and_materiality() -> None:
+    variance = calculate_variance(Decimal("100"), Decimal("110"), absolute_threshold=Decimal("5"), percent_threshold=Decimal("0.05"))
+    assert variance.material
+    assert "over by" in explain_variance(variance)
+    policy = MaterialityPolicy(absolute_floor=Decimal("10"), account_percent=Decimal("0.01"))
+    assert policy.threshold(Decimal("5000")) == Decimal("50.00")
+    assert policy.is_material(Decimal("60"), Decimal("5000"))

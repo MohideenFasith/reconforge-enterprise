@@ -1,0 +1,13 @@
+from reconforge.models import MatchRuleIn, RuleKind
+from reconforge.rules import RuleService
+from reconforge.storage import InMemoryStore
+
+
+def test_default_rules_and_priority_order() -> None:
+    service = RuleService(InMemoryStore())
+    defaults = service.seed_defaults("t1")
+    assert len(defaults) == 3
+    assert [rule.priority for rule in service.list("t1")] == [10, 20, 30]
+    assert service.seed_defaults("t1") == defaults
+    custom = service.create("t1", MatchRuleIn(name="Late", kind=RuleKind.DATE_WINDOW, priority=90, date_window_days=10))
+    assert custom.kind == RuleKind.DATE_WINDOW

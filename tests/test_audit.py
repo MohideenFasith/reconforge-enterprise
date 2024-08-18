@@ -1,0 +1,10 @@
+from reconforge.audit import AuditLog
+from reconforge.storage import InMemoryStore
+
+
+def test_audit_record_and_filter() -> None:
+    audit = AuditLog(InMemoryStore())
+    one = audit.record("t", actor="a", action="x", resource_type="case", resource_id="c1", payload={"n": 1})
+    audit.record("t", actor="b", action="y", resource_type="case", resource_id="c2")
+    assert audit.list("t", resource_id="c1") == [one]
+    assert len(audit.list("t")) == 2

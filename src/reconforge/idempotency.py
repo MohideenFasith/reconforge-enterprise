@@ -1,0 +1,44 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from dataclasses import dataclass
+from threading import RLock
+from typing import Any
+
+from .errors import DuplicateIdempotencyKey
+
+
+@dataclass(slots=True)
+class IdempotencyRecord:
+    digest: str
+    response: Any
+
+
+class IdempotencyStore:
+    def __init__(self) -> None:
+        self._records: dict[tuple[str, str], IdempotencyRecord] = {}
+        self._lock = RLock()
+
+    @staticmethod
+    def digest(payload: Any) -> str:
+        encoded = json.dumps(payload, sort_keys=True, default=str, separators=(",", ":")).encode()
+        return hashlib.sha256(encoded).hexdigest()
+
+    def get(self, tenant_id: str, key: str, payload: Any) -> Any | None:
+        digest = self.digest(payload)
+        with self._lock:
+            record = self._records.get((tenant_id, key))
+            if record is None:
+                return None
+            if record.digest != digest:
+                raise DuplicateIdempotencyKey("idempotency key reused with different payload")
+            return record.response
+
+    def put(self, tenant_id: str, key: str, payload: Any, response: Any) -> None:
+        digest = self.digest(payload)
+        with self._lock:
+            current = self._records.get((tenant_id, key))
+            if current is not None and current.digest != digest:
+                raise DuplicateIdempotencyKey("idempotency key reused with different payload")
+            self._records[(tenant_id, key)] = IdempotencyRecord(digest=digest, response=response)
