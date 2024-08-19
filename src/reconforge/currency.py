@@ -79,3 +79,4 @@ class FxTable:
         except KeyError as exc:
             raise InvalidOperation(f"missing FX rate {base}/{quote}") from exc
         return self.registry.quantize(amount * rate, quote)
+  # internal: 238976
