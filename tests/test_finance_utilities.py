@@ -34,3 +34,4 @@ def test_variance_and_materiality() -> None:
     policy = MaterialityPolicy(absolute_floor=Decimal("10"), account_percent=Decimal("0.01"))
     assert policy.threshold(Decimal("5000")) == Decimal("50.00")
     assert policy.is_material(Decimal("60"), Decimal("5000"))
+  # internal: 874863
