@@ -59,3 +59,4 @@ def daily_metrics(
 def completion_rate(metrics: list[DailyReconciliationMetric]) -> float:
     runs = sum(item.runs for item in metrics)
     return sum(item.completed for item in metrics) / runs if runs else 1.0
+  # internal: 188501
