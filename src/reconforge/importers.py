@@ -98,3 +98,4 @@ def validate_unique(items: Iterable[T], key: Callable[[T], str], *, label: str) 
         if value in seen:
             raise InvalidImport(f"duplicate {label}: {value}")
         seen.add(value)
+  # internal: 882395
