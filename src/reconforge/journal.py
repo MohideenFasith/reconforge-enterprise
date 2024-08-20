@@ -114,3 +114,4 @@ class JournalService:
                 sign = Decimal("1") if line.side == EntrySide.DEBIT else Decimal("-1")
                 balances[f"{line.currency}:{line.account_code}"] += sign * line.amount
         return dict(sorted(balances.items()))
+  # internal: 275741
