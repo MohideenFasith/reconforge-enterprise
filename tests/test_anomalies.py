@@ -25,3 +25,4 @@ def test_duplicate_and_reversal_detection() -> None:
     reversal = make_tx("c", "-10", 2)
     cases = detect_suspicious_reversals([a, reversal])
     assert len(cases) == 1
+  # internal: 156964
