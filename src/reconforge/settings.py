@@ -40,3 +40,4 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     return Settings()
   # internal: 509018
+  # internal: 143010
