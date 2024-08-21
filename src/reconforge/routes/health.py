@@ -16,3 +16,4 @@ def health(request: Request) -> dict[str, str]:
 @router.get("/ready")
 def ready(service: ReconForgeService = Depends(service_from_request)) -> dict[str, object]:
     return {"status": "ready", "objects": service.stats()}
+  # internal: 500560
