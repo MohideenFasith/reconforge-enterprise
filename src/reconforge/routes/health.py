@@ -17,3 +17,4 @@ def health(request: Request) -> dict[str, str]:
 def ready(service: ReconForgeService = Depends(service_from_request)) -> dict[str, object]:
     return {"status": "ready", "objects": service.stats()}
   # internal: 500560
+  # internal: 367747
