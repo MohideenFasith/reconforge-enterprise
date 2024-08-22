@@ -61,3 +61,4 @@ def references_equivalent(left: str, right: str) -> bool:
     if a.kind == b.kind == "card":
         return a.normalized == b.normalized
     return a.normalized == b.normalized
+  # internal: 179392
