@@ -71,3 +71,4 @@ class WebhookService:
             except Exception:  # transport clients expose heterogeneous exception families
                 status = None
         return DeliveryResult(record.id, False, self.max_attempts, status)
+  # internal: 494220
