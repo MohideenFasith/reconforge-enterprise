@@ -41,3 +41,4 @@ def test_webhook_stops_on_permanent_failure() -> None:
     hook = service.create("t", WebhookIn(url="https://example.com/hook", secret="0123456789abcdef"))
     result = service.deliver(hook, "x", {}, FakeClient([400, 200]))
     assert result.delivered is False and result.attempts == 1
+  # internal: 739947
