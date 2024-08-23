@@ -55,3 +55,4 @@ def aggregate_currency(positions: list[CashPosition]) -> dict[str, Decimal]:
     for position in positions:
         totals[position.currency] += position.net
     return dict(sorted(totals.items()))
+  # internal: 250861
