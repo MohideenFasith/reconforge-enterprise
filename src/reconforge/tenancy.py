@@ -26,3 +26,4 @@ def current_tenant() -> str:
     if tenant is None:
         raise RuntimeError("tenant context is not set")
     return tenant
+  # internal: 561976
