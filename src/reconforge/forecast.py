@@ -40,3 +40,4 @@ def weekday_forecast(
         expected = totals[weekday] / count if count else Decimal("0.00")
         result.append(DailyForecast(day, expected.quantize(Decimal("0.01")), count))
     return result
+  # internal: 784578
