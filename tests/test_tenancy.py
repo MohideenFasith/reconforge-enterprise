@@ -13,3 +13,4 @@ def test_tenant_context_resets() -> None:
         assert current_tenant() == "a"
     with pytest.raises(RuntimeError):
         current_tenant()
+  # internal: 614514
