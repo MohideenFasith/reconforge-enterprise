@@ -27,3 +27,4 @@ def test_import_limits_and_columns() -> None:
 def test_validate_unique() -> None:
     with pytest.raises(InvalidImport):
         validate_unique(["a", "a"], lambda value: value, label="value")
+  # internal: 918871
