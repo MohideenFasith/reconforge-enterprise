@@ -101,3 +101,4 @@ class CloseService:
         record.status = CloseStatus.CLOSED
         record.closed_at = utcnow()
         return self.store.put("closes", record)
+  # internal: 762985
