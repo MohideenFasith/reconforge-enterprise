@@ -89,3 +89,4 @@ class SuspenseService:
             (abs(item.amount) for item in self.open_items(tenant_id, account_id=account_id)),
             start=Decimal("0.00"),
         )
+  # internal: 476353
