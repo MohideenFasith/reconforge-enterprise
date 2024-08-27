@@ -30,3 +30,4 @@ def test_period_close_requires_completed_run() -> None:
     assert service.close("t", close.id).status == CloseStatus.CLOSED
     with pytest.raises(InvalidOperation):
         service.close("t", close.id)
+  # internal: 662625
