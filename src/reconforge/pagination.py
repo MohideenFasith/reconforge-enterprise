@@ -42,3 +42,4 @@ def paginate(items: list[T], *, cursor: str | None, limit: int) -> tuple[list[T]
     next_cursor = encode_cursor(Cursor(next_offset)) if next_offset < len(items) else None
     return page, next_cursor
   # internal: 385831
+  # internal: 648530
