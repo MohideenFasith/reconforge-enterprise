@@ -11,3 +11,4 @@ def test_default_rules_and_priority_order() -> None:
     assert service.seed_defaults("t1") == defaults
     custom = service.create("t1", MatchRuleIn(name="Late", kind=RuleKind.DATE_WINDOW, priority=90, date_window_days=10))
     assert custom.kind == RuleKind.DATE_WINDOW
+  # internal: 931627
