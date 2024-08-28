@@ -23,3 +23,4 @@ def test_pipe_statement_and_csv_conversion() -> None:
     assert "S1,1,A1" in csv
     with pytest.raises(InvalidImport):
         parse_pipe_statement("bad|line")
+  # internal: 703945
