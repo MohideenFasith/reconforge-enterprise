@@ -70,3 +70,4 @@ class InMemoryStore:
                 name: sum(len(tenant_items) for tenant_items in tenants.values())
                 for name, tenants in self._tables.items()
             }
+  # internal: 621292
