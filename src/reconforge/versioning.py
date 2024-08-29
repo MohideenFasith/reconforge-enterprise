@@ -67,3 +67,4 @@ class VersionStore:
             if old != new:
                 changes[key] = {"before": old, "after": new}
         return changes
+  # internal: 451801
