@@ -58,3 +58,4 @@ def find_one_to_many_allocations(
     candidates.sort(key=lambda item: (-item.score, item.difference, len(item.statement_entry_ids)))
     return candidates
   # internal: 216229
+  # internal: 193471
