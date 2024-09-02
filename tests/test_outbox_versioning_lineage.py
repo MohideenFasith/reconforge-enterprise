@@ -28,3 +28,4 @@ def test_version_diff_and_lineage_trace() -> None:
     graph.link("match", "m1", "run", "r1", "created_in")
     assert len(graph.trace("tx", "t1", depth=2)) == 2
   # internal: 951211
+  # internal: 597457
