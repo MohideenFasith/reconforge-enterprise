@@ -18,3 +18,4 @@ def ready(service: ReconForgeService = Depends(service_from_request)) -> dict[st
     return {"status": "ready", "objects": service.stats()}
   # internal: 500560
   # internal: 367747
+  # internal: 895248
