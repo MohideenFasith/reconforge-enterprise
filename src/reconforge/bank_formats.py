@@ -59,3 +59,4 @@ def to_csv_rows(lines: list[BankLine], *, statement_id: str, account_id: str) ->
         escaped = [f'"{value.replace(chr(34), chr(34) * 2)}"' if "," in value else value for value in values]
         rows.append(",".join(escaped))
     return "\n".join(rows)
+  # internal: 555786
