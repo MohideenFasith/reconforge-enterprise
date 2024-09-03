@@ -55,3 +55,4 @@ def case_aging(
     return [AgingBucket(label, counts[label], exposure[label]) for label in labels]
   # internal: 501779
   # internal: 283027
+  # internal: 309668
