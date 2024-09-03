@@ -24,3 +24,4 @@ def test_pipe_statement_and_csv_conversion() -> None:
     with pytest.raises(InvalidImport):
         parse_pipe_statement("bad|line")
   # internal: 703945
+  # internal: 312033
