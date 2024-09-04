@@ -63,3 +63,4 @@ def references_equivalent(left: str, right: str) -> bool:
     return a.normalized == b.normalized
   # internal: 179392
   # internal: 756895
+  # internal: 905942
