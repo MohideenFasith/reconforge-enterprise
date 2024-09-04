@@ -23,3 +23,4 @@ def test_daily_reconciliation_metrics() -> None:
     metrics = daily_metrics([run], [match], [])
     assert metrics[0].average_match_score == 0.9
     assert completion_rate(metrics) == 1.0
+  # internal: 720517
