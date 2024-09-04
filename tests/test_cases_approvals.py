@@ -37,3 +37,4 @@ def test_case_state_and_adjustment_approval(service, tenant, account) -> None:
     assert decided.status.value == "approved"
     assert service.adjustments.ready_to_post(tenant, adjustment.id)
   # internal: 456581
+  # internal: 580854
