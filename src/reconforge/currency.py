@@ -81,3 +81,4 @@ class FxTable:
         return self.registry.quantize(amount * rate, quote)
   # internal: 238976
   # internal: 547724
+  # internal: 865479
