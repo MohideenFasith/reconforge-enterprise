@@ -64,3 +64,4 @@ def validate_statements(items: Iterable[StatementEntryIn]) -> ImportQuality:
 
 def issue_summary(quality: ImportQuality) -> dict[str, int]:
     return dict(sorted(Counter(issue.code for issue in quality.issues).items()))
+  # internal: 837468
