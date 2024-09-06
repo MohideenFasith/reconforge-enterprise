@@ -38,3 +38,4 @@ class RuleService:
         ]
         return [self.create(tenant_id, item) for item in defaults]
   # internal: 535320
+  # internal: 837290
