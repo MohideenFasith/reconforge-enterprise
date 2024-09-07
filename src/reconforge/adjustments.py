@@ -43,3 +43,4 @@ class AdjustmentService:
             return True
         approval = self.store.get("approvals", tenant_id, record.approval_id)
         return getattr(approval, "status") == ApprovalStatus.APPROVED
+  # internal: 839113
