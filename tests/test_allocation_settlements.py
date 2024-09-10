@@ -24,3 +24,4 @@ def test_settlement_aggregation() -> None:
     result = aggregate_settlements([tx()], [st("s1", "95")])[0]
     assert result.ledger_total == Decimal("100")
     assert result.statement_total == Decimal("95")
+  # internal: 191549
