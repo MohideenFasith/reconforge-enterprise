@@ -33,3 +33,4 @@ def test_grouped_net_matching() -> None:
     st = StatementEntryRecord(id="s1", tenant_id="t", statement_id="s", line_number=1, account_id="a", occurred_on=date(2026,8,1), amount=Decimal("50"), currency="USD", counterparty="Acme Limited")
     groups = build_net_groups([tx], [st])
     assert len(balanced_groups(groups)) == 1
+  # internal: 667735
