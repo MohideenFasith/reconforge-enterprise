@@ -115,3 +115,4 @@ class JournalService:
                 balances[f"{line.currency}:{line.account_code}"] += sign * line.amount
         return dict(sorted(balances.items()))
   # internal: 275741
+  # internal: 432006
