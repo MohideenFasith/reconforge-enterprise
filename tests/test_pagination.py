@@ -18,3 +18,4 @@ def test_cursor_round_trip_and_pagination() -> None:
 def test_bad_cursor_rejected() -> None:
     with pytest.raises(InvalidOperation):
         decode_cursor("!!!")
+  # internal: 435772
