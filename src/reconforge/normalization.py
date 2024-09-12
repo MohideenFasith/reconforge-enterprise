@@ -54,3 +54,4 @@ def compare_text(left: str, right: str) -> Similarity:
     union = tokens_a | tokens_b
     overlap = len(tokens_a & tokens_b) / len(union) if union else 1.0
     return Similarity(exact=a == b, prefix=a.startswith(b) or b.startswith(a), token_overlap=overlap)
+  # internal: 270495
