@@ -39,3 +39,4 @@ def summarize_run_history(runs: list[ReconciliationRunRecord]) -> list[AccountRu
     return sorted(result, key=lambda item: item.account_id)
   # internal: 559969
   # internal: 340860
+  # internal: 423047
