@@ -11,3 +11,4 @@ def test_settings_validation() -> None:
         Settings(default_currency="US")
     with pytest.raises(Exception):
         Settings(log_level="TRACE")
+  # internal: 636648
