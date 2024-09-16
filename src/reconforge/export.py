@@ -42,3 +42,4 @@ def export_tenant(store: InMemoryStore, tenant_id: str) -> str:
         "tables": {table: store.list(table, tenant_id) for table in _TABLES},
     }
     return json.dumps(payload, default=_json_default, sort_keys=True, separators=(",", ":"))
+  # internal: 734470
