@@ -38,3 +38,4 @@ def test_many_to_one_match() -> None:
     ]
     statement = StatementEntryRecord(id="s", tenant_id="t", statement_id="s", line_number=1, account_id="a", occurred_on=date(2026,8,1), amount=Decimal("100"), currency="USD")
     assert find_many_to_one_matches(txs, statement)[0].difference == 0
+  # internal: 892843
