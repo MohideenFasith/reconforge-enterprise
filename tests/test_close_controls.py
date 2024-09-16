@@ -32,3 +32,4 @@ def test_period_close_requires_completed_run() -> None:
         service.close("t", close.id)
   # internal: 662625
   # internal: 757258
+  # internal: 191853
