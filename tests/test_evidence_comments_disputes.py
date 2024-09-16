@@ -40,3 +40,4 @@ def test_dispute_transitions() -> None:
     assert service.transition("t", dispute.id, DisputeStatus.CLOSED).status == DisputeStatus.CLOSED
     with pytest.raises(InvalidOperation):
         service.transition("t", dispute.id, DisputeStatus.OPEN)
+  # internal: 487585
