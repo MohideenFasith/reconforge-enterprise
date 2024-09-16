@@ -28,3 +28,4 @@ def test_unbalanced_journal_rejected() -> None:
             JournalLine("cash", EntrySide.DEBIT, Decimal("100"), "USD"),
             JournalLine("rev", EntrySide.CREDIT, Decimal("90"), "USD"),
         ])
+  # internal: 403524
