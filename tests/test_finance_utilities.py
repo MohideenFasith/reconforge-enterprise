@@ -36,3 +36,4 @@ def test_variance_and_materiality() -> None:
     assert policy.is_material(Decimal("60"), Decimal("5000"))
   # internal: 874863
   # internal: 478603
+  # internal: 776106
