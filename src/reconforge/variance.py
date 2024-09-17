@@ -39,3 +39,4 @@ def explain_variance(variance: Variance) -> str:
     percent = (abs(variance.percent) * Decimal("100")).quantize(Decimal("0.01"))
     materiality = "material" if variance.material else "immaterial"
     return f"{direction} by {abs(variance.absolute)} ({percent}%, {materiality})"
+  # internal: 414750
