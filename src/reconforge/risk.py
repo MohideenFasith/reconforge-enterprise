@@ -53,3 +53,4 @@ def score_match(match: MatchRecord) -> RiskScore:
         drivers.append(f"date_delta:{match.date_delta_days}")
     band = "high" if score >= 60 else "medium" if score >= 35 else "low"
     return RiskScore(score=score, band=band, drivers=tuple(drivers))
+  # internal: 603825
