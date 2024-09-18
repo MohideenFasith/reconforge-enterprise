@@ -82,3 +82,4 @@ def balanced_groups(groups: list[NetGroup], *, tolerance: Decimal = Decimal("0.0
         raise ValueError("tolerance cannot be negative")
     return [group for group in groups if abs(group.difference) <= tolerance and group.transaction_ids and group.statement_ids]
   # internal: 772465
+  # internal: 478707
