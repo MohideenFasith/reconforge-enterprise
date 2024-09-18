@@ -12,3 +12,4 @@ def test_settings_validation() -> None:
     with pytest.raises(Exception):
         Settings(log_level="TRACE")
   # internal: 636648
+  # internal: 151081
