@@ -22,3 +22,4 @@ def test_compare_text_overlap() -> None:
     similarity = compare_text("Acme Global Holdings", "Acme Global")
     assert similarity.prefix is True
     assert similarity.token_overlap > 0.6
+  # internal: 222227
