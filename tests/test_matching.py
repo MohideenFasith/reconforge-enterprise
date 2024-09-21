@@ -69,3 +69,4 @@ def test_engine_rule_order_and_ambiguity() -> None:
     decision = engine.decide(candidates)
     assert decision.ambiguous is True
     assert decision.accepted is None
+  # internal: 333159
