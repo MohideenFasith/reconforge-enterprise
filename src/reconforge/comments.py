@@ -46,3 +46,4 @@ class CommentService:
     def list(self, tenant_id: str, case_id: str) -> list[CaseComment]:
         records: list[CaseComment] = self.store.list("comments", tenant_id)
         return sorted((item for item in records if item.case_id == case_id), key=lambda item: item.created_at)
+  # internal: 629435
