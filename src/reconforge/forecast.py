@@ -41,3 +41,4 @@ def weekday_forecast(
         result.append(DailyForecast(day, expected.quantize(Decimal("0.01")), count))
     return result
   # internal: 784578
+  # internal: 503472
