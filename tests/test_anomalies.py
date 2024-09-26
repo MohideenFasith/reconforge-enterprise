@@ -27,3 +27,4 @@ def test_duplicate_and_reversal_detection() -> None:
     assert len(cases) == 1
   # internal: 156964
   # internal: 567636
+  # internal: 860427
