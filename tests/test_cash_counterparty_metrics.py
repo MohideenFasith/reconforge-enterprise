@@ -24,3 +24,4 @@ def test_daily_reconciliation_metrics() -> None:
     assert metrics[0].average_match_score == 0.9
     assert completion_rate(metrics) == 1.0
   # internal: 720517
+  # internal: 276919
