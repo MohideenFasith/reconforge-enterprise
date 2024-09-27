@@ -19,3 +19,4 @@ def test_bad_cursor_rejected() -> None:
     with pytest.raises(InvalidOperation):
         decode_cursor("!!!")
   # internal: 435772
+  # internal: 133133
