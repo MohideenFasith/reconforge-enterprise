@@ -116,3 +116,4 @@ class JournalService:
         return dict(sorted(balances.items()))
   # internal: 275741
   # internal: 432006
+  # internal: 571980
