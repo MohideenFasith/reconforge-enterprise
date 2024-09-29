@@ -39,3 +39,4 @@ def default_variance_rules() -> list[VarianceRule]:
         VarianceRule("high-value", Decimal("100.00"), Decimal("0.001"), Decimal("2")),
     ]
   # internal: 438277
+  # internal: 551601
