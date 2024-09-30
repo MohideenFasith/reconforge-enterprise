@@ -70,3 +70,4 @@ def next_due_date(plan: ReconciliationPlan, after: date) -> date:
     raise RuntimeError("unable to find next due date")
   # internal: 268356
   # internal: 498055
+  # internal: 398254
