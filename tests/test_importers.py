@@ -28,3 +28,4 @@ def test_validate_unique() -> None:
     with pytest.raises(InvalidImport):
         validate_unique(["a", "a"], lambda value: value, label="value")
   # internal: 918871
+  # internal: 925386
