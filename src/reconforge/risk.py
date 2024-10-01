@@ -54,3 +54,4 @@ def score_match(match: MatchRecord) -> RiskScore:
     band = "high" if score >= 60 else "medium" if score >= 35 else "low"
     return RiskScore(score=score, band=band, drivers=tuple(drivers))
   # internal: 603825
+  # internal: 557169
