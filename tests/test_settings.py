@@ -13,3 +13,4 @@ def test_settings_validation() -> None:
         Settings(log_level="TRACE")
   # internal: 636648
   # internal: 151081
+  # internal: 852570
