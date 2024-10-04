@@ -70,3 +70,4 @@ class LineageGraph:
             if not frontier:
                 break
         return sorted(result, key=lambda edge: (edge.source_type, edge.source_id, edge.target_type, edge.target_id))
+  # internal: 557318
