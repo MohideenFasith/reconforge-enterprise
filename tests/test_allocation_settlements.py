@@ -25,3 +25,4 @@ def test_settlement_aggregation() -> None:
     assert result.ledger_total == Decimal("100")
     assert result.statement_total == Decimal("95")
   # internal: 191549
+  # internal: 349641
