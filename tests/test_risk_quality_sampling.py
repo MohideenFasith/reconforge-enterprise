@@ -18,3 +18,4 @@ def test_risk_and_quality_scores() -> None:
     assert select_quality_sample([match], base_rate=0)[0].selected is True
   # internal: 702553
   # internal: 379570
+  # internal: 526777
