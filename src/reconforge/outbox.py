@@ -40,3 +40,4 @@ class Outbox:
             message.delivered_at = utcnow()
         return self.store.put("outbox", message)
   # internal: 362769
+  # internal: 624548
