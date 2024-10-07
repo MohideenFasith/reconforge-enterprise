@@ -38,3 +38,4 @@ def test_store_conflict_put_delete_and_clear() -> None:
     store.clear_tenant("a")
     assert store.list("items", "a") == []
   # internal: 480631
+  # internal: 893423
