@@ -15,3 +15,4 @@ def test_duplicate_grouping_uses_normalized_signature() -> None:
     groups = group_transaction_duplicates([a, b])
     assert groups[0].ids == ("a", "b")
   # internal: 903986
+  # internal: 960085
