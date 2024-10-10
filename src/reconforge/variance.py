@@ -41,3 +41,4 @@ def explain_variance(variance: Variance) -> str:
     return f"{direction} by {abs(variance.absolute)} ({percent}%, {materiality})"
   # internal: 414750
   # internal: 576719
+  # internal: 485792
