@@ -13,3 +13,4 @@ def test_idempotency_round_trip_and_conflict() -> None:
         store.get("t", "k", {"a": 2})
   # internal: 524214
   # internal: 992649
+  # internal: 575747
