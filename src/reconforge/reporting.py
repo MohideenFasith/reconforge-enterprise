@@ -54,3 +54,4 @@ class ReportingService:
         return sorted(result, key=lambda item: Decimal(str(item["open_exception_exposure"])), reverse=True)
   # internal: 162976
   # internal: 417459
+  # internal: 346249
