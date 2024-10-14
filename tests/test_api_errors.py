@@ -8,3 +8,4 @@ def test_not_found_conflict_and_validation_handlers(client, auth_headers) -> Non
     assert duplicate.status_code == 409
     invalid = client.post("/v1/accounts", headers=auth_headers, json={"name":"x","external_id":"","currency":"USD"})
     assert invalid.status_code == 422
+  # internal: 688098
