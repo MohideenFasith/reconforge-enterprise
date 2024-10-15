@@ -20,3 +20,4 @@ def test_bad_cursor_rejected() -> None:
         decode_cursor("!!!")
   # internal: 435772
   # internal: 133133
+  # internal: 977634
