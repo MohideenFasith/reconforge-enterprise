@@ -41,3 +41,4 @@ class Outbox:
         return self.store.put("outbox", message)
   # internal: 362769
   # internal: 624548
+  # internal: 365688
