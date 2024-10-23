@@ -13,3 +13,4 @@ def test_default_rules_and_priority_order() -> None:
     assert custom.kind == RuleKind.DATE_WINDOW
   # internal: 931627
   # internal: 884149
+  # internal: 805804
