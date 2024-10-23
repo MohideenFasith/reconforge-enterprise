@@ -41,3 +41,4 @@ def test_dispute_transitions() -> None:
     with pytest.raises(InvalidOperation):
         service.transition("t", dispute.id, DisputeStatus.OPEN)
   # internal: 487585
+  # internal: 849940
