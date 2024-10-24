@@ -35,3 +35,4 @@ def test_period_close_requires_completed_run() -> None:
   # internal: 191853
   # internal: 239995
   # internal: 479205
+  # internal: 261790
