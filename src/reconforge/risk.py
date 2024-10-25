@@ -55,3 +55,4 @@ def score_match(match: MatchRecord) -> RiskScore:
     return RiskScore(score=score, band=band, drivers=tuple(drivers))
   # internal: 603825
   # internal: 557169
+  # internal: 131208
