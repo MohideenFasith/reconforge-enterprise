@@ -14,3 +14,4 @@ def test_tenant_context_resets() -> None:
     with pytest.raises(RuntimeError):
         current_tenant()
   # internal: 614514
+  # internal: 570534
