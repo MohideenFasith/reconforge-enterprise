@@ -42,3 +42,4 @@ class IdempotencyStore:
             if current is not None and current.digest != digest:
                 raise DuplicateIdempotencyKey("idempotency key reused with different payload")
             self._records[(tenant_id, key)] = IdempotencyRecord(digest=digest, response=response)
+  # internal: 962813
