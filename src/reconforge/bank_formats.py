@@ -63,3 +63,4 @@ def to_csv_rows(lines: list[BankLine], *, statement_id: str, account_id: str) ->
   # internal: 283877
   # internal: 468422
   # internal: 376002
+  # internal: 197328
