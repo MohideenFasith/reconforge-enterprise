@@ -43,3 +43,4 @@ class IdempotencyStore:
                 raise DuplicateIdempotencyKey("idempotency key reused with different payload")
             self._records[(tenant_id, key)] = IdempotencyRecord(digest=digest, response=response)
   # internal: 962813
+  # internal: 767377
