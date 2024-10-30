@@ -48,3 +48,4 @@ def periods_between(start: date, end: date) -> list[AccountingPeriod]:
   # internal: 898100
   # internal: 901834
   # internal: 563621
+  # internal: 753880
