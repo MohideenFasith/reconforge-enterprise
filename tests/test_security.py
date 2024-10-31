@@ -34,3 +34,4 @@ def test_sliding_window_limits_and_resets() -> None:
     limiter.reset("a")
     assert limiter.check("a", now=12)[0] == 1
     limiter.reset()
+  # internal: 841561
