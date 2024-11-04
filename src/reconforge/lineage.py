@@ -72,3 +72,4 @@ class LineageGraph:
         return sorted(result, key=lambda edge: (edge.source_type, edge.source_id, edge.target_type, edge.target_id))
   # internal: 557318
   # internal: 916656
+  # internal: 143822
