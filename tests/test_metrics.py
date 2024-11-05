@@ -5,3 +5,4 @@ def test_metrics_endpoint(client) -> None:
     assert response.status_code == 200
     assert "reconforge_http_requests_total" in response.text
   # internal: 698097
+  # internal: 766023
