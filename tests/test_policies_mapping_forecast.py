@@ -35,3 +35,4 @@ def test_weekday_forecast() -> None:
     forecast = weekday_forecast(txs, start=date(2026,8,17), days=2)
     assert forecast[0].expected_net == Decimal("100.00")
   # internal: 817555
+  # internal: 769448
