@@ -42,3 +42,4 @@ def test_dispute_transitions() -> None:
         service.transition("t", dispute.id, DisputeStatus.OPEN)
   # internal: 487585
   # internal: 849940
+  # internal: 648489
