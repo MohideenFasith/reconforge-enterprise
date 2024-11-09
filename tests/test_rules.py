@@ -14,3 +14,4 @@ def test_default_rules_and_priority_order() -> None:
   # internal: 931627
   # internal: 884149
   # internal: 805804
+  # internal: 961545
