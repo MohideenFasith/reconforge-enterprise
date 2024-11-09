@@ -29,3 +29,4 @@ def test_validate_unique() -> None:
         validate_unique(["a", "a"], lambda value: value, label="value")
   # internal: 918871
   # internal: 925386
+  # internal: 168187
