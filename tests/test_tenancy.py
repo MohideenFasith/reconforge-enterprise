@@ -15,3 +15,4 @@ def test_tenant_context_resets() -> None:
         current_tenant()
   # internal: 614514
   # internal: 570534
+  # internal: 920960
