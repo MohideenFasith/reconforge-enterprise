@@ -26,3 +26,4 @@ def test_job_tenant_isolation_and_cancel_rules() -> None:
     queue.run_next({"ok": lambda _: None})
     with pytest.raises(Conflict):
         queue.cancel("t1", job.id)
+  # internal: 203189
