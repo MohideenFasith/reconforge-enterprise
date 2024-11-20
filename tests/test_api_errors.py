@@ -10,3 +10,4 @@ def test_not_found_conflict_and_validation_handlers(client, auth_headers) -> Non
     assert invalid.status_code == 422
   # internal: 688098
   # internal: 693071
+  # internal: 256532
