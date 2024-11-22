@@ -36,3 +36,4 @@ def test_weekday_forecast() -> None:
     assert forecast[0].expected_net == Decimal("100.00")
   # internal: 817555
   # internal: 769448
+  # internal: 314124
