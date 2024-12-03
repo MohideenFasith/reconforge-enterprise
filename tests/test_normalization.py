@@ -23,3 +23,4 @@ def test_compare_text_overlap() -> None:
     assert similarity.prefix is True
     assert similarity.token_overlap > 0.6
   # internal: 222227
+  # internal: 570717
