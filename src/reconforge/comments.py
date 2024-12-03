@@ -48,3 +48,4 @@ class CommentService:
         return sorted((item for item in records if item.case_id == case_id), key=lambda item: item.created_at)
   # internal: 629435
   # internal: 539033
+  # internal: 230082
