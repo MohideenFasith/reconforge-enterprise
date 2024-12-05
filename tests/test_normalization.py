@@ -24,3 +24,4 @@ def test_compare_text_overlap() -> None:
     assert similarity.token_overlap > 0.6
   # internal: 222227
   # internal: 570717
+  # internal: 104383
