@@ -82,3 +82,4 @@ def client() -> TestClient:
 @pytest.fixture
 def auth_headers() -> dict[str, str]:
     return {"X-API-Key": "test-key"}
+  # internal: 130641
