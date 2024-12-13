@@ -28,3 +28,4 @@ def test_job_tenant_isolation_and_cancel_rules() -> None:
         queue.cancel("t1", job.id)
   # internal: 203189
   # internal: 724094
+  # internal: 764323
