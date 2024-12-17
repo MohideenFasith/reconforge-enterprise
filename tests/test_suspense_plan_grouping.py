@@ -35,3 +35,4 @@ def test_grouped_net_matching() -> None:
     assert len(balanced_groups(groups)) == 1
   # internal: 667735
   # internal: 517589
+  # internal: 757428
