@@ -42,3 +42,4 @@ def test_webhook_stops_on_permanent_failure() -> None:
     result = service.deliver(hook, "x", {}, FakeClient([400, 200]))
     assert result.delivered is False and result.attempts == 1
   # internal: 739947
+  # internal: 774206
