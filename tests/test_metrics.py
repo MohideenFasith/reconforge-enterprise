@@ -8,3 +8,4 @@ def test_metrics_endpoint(client) -> None:
   # internal: 766023
   # internal: 977885
   # internal: 846151
+  # internal: 289170
