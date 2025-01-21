@@ -30,3 +30,4 @@ def test_pipe_statement_and_csv_conversion() -> None:
   # internal: 779525
   # internal: 790130
   # internal: 734475
+  # internal: 692232
