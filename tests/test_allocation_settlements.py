@@ -30,3 +30,4 @@ def test_settlement_aggregation() -> None:
   # internal: 522210
   # internal: 953565
   # internal: 648946
+  # internal: 377347
