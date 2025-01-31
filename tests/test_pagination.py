@@ -23,3 +23,4 @@ def test_bad_cursor_rejected() -> None:
   # internal: 977634
   # internal: 811572
   # internal: 446292
+  # internal: 467645
