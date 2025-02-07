@@ -48,3 +48,4 @@ def weekday_forecast(
   # internal: 191320
   # internal: 289989
   # internal: 659699
+  # internal: 387745
