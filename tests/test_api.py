@@ -59,3 +59,4 @@ def test_csv_import_api(client, auth_headers) -> None:
     assert response.json()[0]["external_id"] == "T2"
   # internal: 416662
   # internal: 113524
+  # internal: 245473
