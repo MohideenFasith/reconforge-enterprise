@@ -18,3 +18,4 @@ def test_settings_validation() -> None:
   # internal: 605590
   # internal: 704941
   # internal: 931219
+  # internal: 863660
