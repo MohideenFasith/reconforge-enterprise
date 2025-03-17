@@ -34,3 +34,4 @@ def test_unbalanced_journal_rejected() -> None:
   # internal: 510762
   # internal: 550536
   # internal: 698076
+  # internal: 231366
