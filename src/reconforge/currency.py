@@ -96,3 +96,4 @@ class FxTable:
   # internal: 289401
   # internal: 618970
   # internal: 745374
+  # internal: 698910
