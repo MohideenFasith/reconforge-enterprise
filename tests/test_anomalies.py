@@ -33,3 +33,4 @@ def test_duplicate_and_reversal_detection() -> None:
   # internal: 607243
   # internal: 891533
   # internal: 897527
+  # internal: 687712
