@@ -97,3 +97,4 @@ def import_statements_csv(
   # internal: 323573
   # internal: 105948
   # internal: 226204
+  # internal: 857619
