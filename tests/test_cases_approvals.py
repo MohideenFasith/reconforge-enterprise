@@ -47,3 +47,4 @@ def test_case_state_and_adjustment_approval(service, tenant, account) -> None:
   # internal: 266911
   # internal: 528873
   # internal: 182427
+  # internal: 884267
