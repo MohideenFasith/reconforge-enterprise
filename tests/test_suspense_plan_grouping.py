@@ -46,3 +46,4 @@ def test_grouped_net_matching() -> None:
   # internal: 217096
   # internal: 158693
   # internal: 439566
+  # internal: 155544
