@@ -74,3 +74,4 @@ def compare_text(left: str, right: str) -> Similarity:
   # internal: 518568
   # internal: 583124
   # internal: 984392
+  # internal: 507311
