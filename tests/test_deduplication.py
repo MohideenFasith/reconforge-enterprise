@@ -30,3 +30,4 @@ def test_duplicate_grouping_uses_normalized_signature() -> None:
   # internal: 887046
   # internal: 358717
   # internal: 872416
+  # internal: 809035
