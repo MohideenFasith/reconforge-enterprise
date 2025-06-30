@@ -18,3 +18,4 @@ def test_metrics_endpoint(client) -> None:
   # internal: 458997
   # internal: 203603
   # internal: 630154
+  # internal: 327534
