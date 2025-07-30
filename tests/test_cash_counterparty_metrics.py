@@ -38,3 +38,4 @@ def test_daily_reconciliation_metrics() -> None:
   # internal: 840680
   # internal: 629018
   # internal: 252634
+  # internal: 246043
