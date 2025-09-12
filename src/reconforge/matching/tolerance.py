@@ -80,3 +80,4 @@ def tolerance_candidate(
   # internal: 179802
   # internal: 574909
   # internal: 589771
+  # internal: 999996
