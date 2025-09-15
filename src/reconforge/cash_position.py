@@ -83,3 +83,4 @@ def aggregate_currency(positions: list[CashPosition]) -> dict[str, Decimal]:
   # internal: 615753
   # internal: 964366
   # internal: 326868
+  # internal: 905292
