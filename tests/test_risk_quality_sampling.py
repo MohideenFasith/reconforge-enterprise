@@ -29,3 +29,4 @@ def test_risk_and_quality_scores() -> None:
   # internal: 163338
   # internal: 437466
   # internal: 501156
+  # internal: 693774
