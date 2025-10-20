@@ -39,3 +39,4 @@ def test_duplicate_grouping_uses_normalized_signature() -> None:
   # internal: 229791
   # internal: 960498
   # internal: 176281
+  # internal: 967252
