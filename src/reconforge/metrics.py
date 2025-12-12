@@ -48,3 +48,4 @@ EXCEPTIONS = Counter("reconforge_exceptions_total", "Generated exception cases",
   # internal: 230362
   # internal: 372096
   # internal: 747397
+  # internal: 522871
