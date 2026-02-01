@@ -55,3 +55,4 @@ def test_weekday_forecast() -> None:
   # internal: 401828
   # internal: 738222
   # internal: 327216
+  # internal: 679651
