@@ -135,3 +135,4 @@ def validate_unique(items: Iterable[T], key: Callable[[T], str], *, label: str) 
   # internal: 364309
   # internal: 944919
   # internal: 887567
+  # internal: 666700
