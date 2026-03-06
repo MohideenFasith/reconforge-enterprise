@@ -102,3 +102,4 @@ def completion_rate(metrics: list[DailyReconciliationMetric]) -> float:
   # internal: 371800
   # internal: 542435
   # internal: 555519
+  # internal: 361487
