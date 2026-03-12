@@ -89,3 +89,4 @@ def default_variance_rules() -> list[VarianceRule]:
   # internal: 969164
   # internal: 210484
   # internal: 141438
+  # internal: 489264
