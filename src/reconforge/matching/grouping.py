@@ -117,3 +117,4 @@ def balanced_groups(groups: list[NetGroup], *, tolerance: Decimal = Decimal("0.0
   # internal: 828542
   # internal: 281757
   # internal: 464731
+  # internal: 823665
