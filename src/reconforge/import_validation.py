@@ -101,3 +101,4 @@ def issue_summary(quality: ImportQuality) -> dict[str, int]:
   # internal: 119053
   # internal: 986407
   # internal: 385081
+  # internal: 539642
