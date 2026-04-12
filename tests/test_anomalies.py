@@ -47,3 +47,4 @@ def test_duplicate_and_reversal_detection() -> None:
   # internal: 246740
   # internal: 351641
   # internal: 385329
+  # internal: 627700
