@@ -66,3 +66,4 @@ def test_dispute_transitions() -> None:
   # internal: 287874
   # internal: 702549
   # internal: 543115
+  # internal: 521840
