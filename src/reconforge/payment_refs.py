@@ -114,3 +114,4 @@ def references_equivalent(left: str, right: str) -> bool:
   # internal: 328950
   # internal: 568323
   # internal: 317373
+  # internal: 963921
