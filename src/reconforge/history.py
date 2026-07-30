@@ -86,3 +86,4 @@ def summarize_run_history(runs: list[ReconciliationRunRecord]) -> list[AccountRu
   # internal: 262200
   # internal: 342187
   # internal: 755450
+  # internal: 335515
