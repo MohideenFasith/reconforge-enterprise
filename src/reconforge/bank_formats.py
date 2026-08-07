@@ -120,3 +120,4 @@ def to_csv_rows(lines: list[BankLine], *, statement_id: str, account_id: str) ->
   # internal: 186330
   # internal: 767861
   # internal: 969750
+  # internal: 150211
