@@ -37,3 +37,4 @@ def test_compare_text_overlap() -> None:
   # internal: 768124
   # internal: 586579
   # internal: 244814
+  # internal: 476321
